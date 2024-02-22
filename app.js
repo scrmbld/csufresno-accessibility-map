@@ -14,21 +14,19 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(compression()); //compress all responses
 
+/*
 app.use(
     helmet({
         contentSecurityPolicy: false
     })
 );
+*/
 
-const userRouter = require("./routes/issues");
-
-app.get('/', async (req, res) => {
-    res.render('index.ejs');
-});
+const mapRouter = require("./routes/index");
 
 app.use(express.static("public"));
 
-app.use('/issue', userRouter);
+app.use('/', mapRouter);
 
 //start listening on the specified port
 app.listen(port, () => {

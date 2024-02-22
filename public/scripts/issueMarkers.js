@@ -1,6 +1,7 @@
 //take a list of issues and make markers for each one
 async function createMarkers(issues) {
     for (issue of issues) {
+        console.log(issue);
         //protect ourselves from XSS in the issue descriptions
         let outText = DOMPurify.sanitize(issue.textbody);
         if (!outText) continue;
@@ -13,16 +14,12 @@ async function createMarkers(issues) {
         new_marker.bindPopup(`${outText}<br><br><b>Created: </b>${createdText}`);
     }
 }
-/*
-const marker = L.marker([36.81377958775332, -119.74839213481263], {
-    title: "test_title"
-    }).addTo(map);
-marker.bindPopup("<h1>E</h1> <br> Hello There!");
-*/
+
 //get the JSON of all the issues
 async function reqIssues() {
-    const response = await fetch("./issues.json");
+    const response = await fetch("issues");
     const issues = await response.json();
-    //make map markers with that JSON data
-    createMarkers(issues);
+    
+    console.log(JSON.parse(issues));
+    createMarkers(JSON.parse(issues));
 }
