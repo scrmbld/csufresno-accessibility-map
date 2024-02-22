@@ -1,5 +1,6 @@
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const fs = require("fs");
+const striptags = require("striptags");
 
 const dev_db_name = 'cynthia';
 const dev_db_passwd = 'word';
@@ -60,10 +61,29 @@ async function getAllIssues() {
 async function writeIssueJSON(issues = null) {
     //get issues if they are not provided
     if (!issues) {
-        issues = getAll();
+        issues = await Issue.findAll();
     }
     //overwrite issues.json
     fs.writeFileSync('./public/issues.json', JSON.stringify(issues));
 }
 
-module.exports = {getAllIssues, writeIssueJSON};
+//takes a post request and writes an issue to the database
+async function writeIssueDB(req) {
+    //make sure the table exists
+    await sequelize.sync();
+
+    const result = sequelize.transaction((t) => {
+    
+        //insert into database
+        const issue = Issue.create({
+            lat: req.body.lat,
+            lng: req.body.lng,
+            textbody: striptags(req.body.desc),
+        }, {transaction: t});
+    
+        return issue;
+    });
+
+}
+
+module.exports = {getAllIssues, writeIssueJSON, writeIssueDB};

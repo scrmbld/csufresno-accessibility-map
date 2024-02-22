@@ -2,3 +2,4 @@ node_modules
 public/leaflet
 public/issues.json
 public/purify
+test.session.sql

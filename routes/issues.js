@@ -1,31 +1,23 @@
 const express = require("express");
-const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const issuedb = require('../data');
-const striptags = require("striptags");
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     const timeOfReq = new Date(Date.now());
     console.log(Date.now(), ': new report received');
     
     try {
-        const result = issuedb.sequelize.transaction(async (t) => {
- 
-            //insert into database
-            const issue = issuedb.Issue.create({
-                lat: req.body.lat,
-                lng: req.body.lng,
-                textbody: striptags(req.body.desc),
-            }, {transaction: t});
-
-            return issue;
-    });
+        await issuedb.writeIssueDB(req);
     } catch (error) {
         //if the insert doesn't work
-        res.status(500).send( {error: 'unable to log issue'} );
+        console.error(error);
+        res.status(500).send("internal server error");
+        return;
     }
     
+    issuedb.writeIssueJSON();
+
     //send response to user
     res.send(`lat: ${req.body.lat}, long: ${req.body.lng} <br>issue: ${req.body.desc} <br>time: ${timeOfReq.toISOString()}`);
 });
