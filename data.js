@@ -1,4 +1,5 @@
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
+const fs = require("fs");
 
 const dev_db_name = 'cynthia';
 const dev_db_passwd = 'word';
@@ -16,6 +17,7 @@ try {
     console.error('Unable to connect to the database:', error);
 }
 
+//the model for issues -- identifier, coordinates, user entered text, and creation date
 const Issue = sequelize.define("Issue", {
 
     identifier: {
@@ -44,4 +46,24 @@ const Issue = sequelize.define("Issue", {
     updatedAt: false
 });
 
-module.exports = {Issue, sequelize};
+//return array of all issues in database
+async function getAllIssues() {
+    const rawIssues = await Issue.findAll();
+    let issues = [];
+    for (issue of rawIssues) {
+        issues.push(issue);
+    }
+    return issues;
+}
+
+//writes all issues into issues.json where the client can access them
+async function writeIssueJSON(issues = null) {
+    //get issues if they are not provided
+    if (!issues) {
+        issues = getAll();
+    }
+    //overwrite issues.json
+    fs.writeFileSync('./public/issues.json', JSON.stringify(issues));
+}
+
+module.exports = {getAllIssues, writeIssueJSON};

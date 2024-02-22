@@ -12,7 +12,7 @@ const port = 3300;
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 
-app.use(compression()); //cpmpress all responses
+app.use(compression()); //compress all responses
 
 app.use(
     helmet({
@@ -23,20 +23,7 @@ app.use(
 const userRouter = require("./routes/issues");
 
 app.get('/', async (req, res) => {
-    const issues = await issuedb.Issue.findAll();
-    let markers = "";
-    for (let i = 0; i < issues.length; i++) {
-        let vals = issues[i].dataValues;
-        //create the marker
-        markers = markers + 
-            `
-            let m${i} = L.marker([${vals.lat}, ${vals.lng}], {
-                title: "${vals.created}"
-            }).addTo(map);
-            m${i}.bindPopup("${vals.textbody}");
-            `
-    }
-    res.render('index.ejs', {markers});
+    res.render('index.ejs');
 });
 
 app.use(express.static("public"));

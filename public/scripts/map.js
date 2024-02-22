@@ -19,12 +19,10 @@ const mapBoundary = L.latLngBounds(
 );
 map.setMaxBounds(mapBoundary);
 
-/*
-const marker = L.marker([36.81377958775332, -119.74839213481263], {
-    title: "test_title"
-    }).addTo(map);
-marker.bindPopup("<h1>E</h1> <br> Hello There!");
-*/
+//load data & create map markers for stored issues
+reqIssues();
+
+
 
 //at some point we will use this to allow users to report things
 function onMapClick(e) {
@@ -43,5 +41,9 @@ function onMapClick(e) {
         autoPan: false
     }).setLatLng(e.latlng).openOn(map);
 }
+
+
+
+
 
 campusBoundary.on('click', onMapClick);

@@ -1,12 +1,13 @@
 const express = require("express");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const issuedb = require('../data');
+const striptags = require("striptags");
+
 const router = express.Router();
 
 router.post("/", (req, res) => {
     const timeOfReq = new Date(Date.now());
     console.log(Date.now(), ': new report received');
-    
     
     try {
         const result = issuedb.sequelize.transaction(async (t) => {
@@ -15,7 +16,7 @@ router.post("/", (req, res) => {
             const issue = issuedb.Issue.create({
                 lat: req.body.lat,
                 lng: req.body.lng,
-                textbody: req.body.desc
+                textbody: striptags(req.body.desc),
             }, {transaction: t});
 
             return issue;
