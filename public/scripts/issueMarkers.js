@@ -1,7 +1,6 @@
 //take a list of issues and make markers for each one
 async function createMarkers(issues) {
     for (issue of issues) {
-        console.log(issue);
         //protect ourselves from XSS in the issue descriptions
         let outText = DOMPurify.sanitize(issue.textbody);
         if (!outText) continue;
@@ -20,6 +19,5 @@ async function reqIssues() {
     const response = await fetch("issues");
     const issues = await response.json();
     
-    console.log(JSON.parse(issues));
     createMarkers(JSON.parse(issues));
 }
