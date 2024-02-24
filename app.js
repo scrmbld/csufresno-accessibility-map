@@ -1,15 +1,10 @@
 const express = require("express");
-const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const compression = require('compression');
 const helmet = require("helmet");
 
-//check the database on startup
-const issuedb = require('./data');
-issuedb.checkTables();
-
 const app = express();
 //port used by express
-const port = 3300;
+const port = process.env.LISTEN_PORT || 3300;
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
@@ -34,6 +29,10 @@ const mapRouter = require("./routes/index");
 app.use(express.static("public"));
 
 app.use('/', mapRouter);
+
+//check the database on startup
+const issuedb = require('./data');
+issuedb.checkTables();
 
 //start listening on the specified port
 app.listen(port, () => {
