@@ -20,6 +20,7 @@ router.post('/submit', async (req, res) => {
     const timeOfReq = new Date(Date.now());
     console.log(Date.now(), ': new report received from', req.ip);
 
+    issuedb.checkTables();
     try {
         await issuedb.writeIssueDB(req);
     } catch (error) {
@@ -37,6 +38,7 @@ router.post('/submit', async (req, res) => {
 
 //send all issues in database to client in JSON form
 router.get('/issues', async (req, res) => {
+    issuedb.checkTables();
     let issues = await issuedb.getAllIssues();
     res.json(JSON.stringify(issues));
 });

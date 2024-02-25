@@ -4,20 +4,17 @@ const striptags = require("striptags");
 
 const dev_db_name = 'cynthia';
 const dev_db_passwd = 'word';
-    
-//initialize sequelize
+
+var authenticated = false;
+
+
 const sequelize = new Sequelize('accessibility', process.env.MYSQL_USER || dev_db_name, process.env.MYSQL_PASSWD || dev_db_passwd, {
     host: process.env.MYSQL_HOSTNAME || 'localhost',
     port: process.env.MYSQL_PORT || '33060',
     dialect: 'mysql'
 });
-
-try {
-    sequelize.authenticate();
-    console.log('MySQL Conenction has been established successfully');
-} catch (error) {
-    console.error('Unable to connect to the database:', error);
-}
+       
+console.log('MySQL Conenction has been established successfully');
 
 //the model for issues -- identifier, coordinates, user entered text, and creation date
 const Issue = sequelize.define("Issue", {
@@ -48,7 +45,7 @@ const Issue = sequelize.define("Issue", {
     updatedAt: false
 });
 
-function checkTables() { sequelize.sync(); }
+function checkTables() { if (sequelize) sequelize.sync(); }
 
 //return array of all issues in database
 async function getAllIssues() {
