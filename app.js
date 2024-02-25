@@ -30,6 +30,10 @@ app.use(express.static("public"));
 
 app.use('/', mapRouter);
 
+//syncronise issue table
+const issuedb = require("./data");
+issuedb.checkTables();
+
 //start listening on the specified port
 app.listen(port, () => {
     console.log(`listening on port ${port}`);

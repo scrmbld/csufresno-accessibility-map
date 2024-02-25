@@ -50,8 +50,4 @@ function onMapClick(e) {
     }).setLatLng(e.latlng).openOn(map);
 }
 
-
-
-
-
 campusBoundary.on('click', onMapClick);
