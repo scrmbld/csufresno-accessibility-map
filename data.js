@@ -4,12 +4,6 @@ const striptags = require("striptags");
 
 const dev_db_name = 'cynthia';
 const dev_db_passwd = 'word';
-
-//wait 10 seconds before doing this (stupid stupid solution)
-(async function() {
-    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-    await sleep(10000)
-    })()
     
 //initialize sequelize
 const sequelize = new Sequelize('accessibility', process.env.MYSQL_USER || dev_db_name, process.env.MYSQL_PASSWD || dev_db_passwd, {
