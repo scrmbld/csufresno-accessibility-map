@@ -14,10 +14,11 @@ app.use(compression()); //compress all responses
 app.use(
     helmet({
         contentSecurityPolicy: {
+            useDefaults: false,
             directives: {
                 "default-src": ["'self'"],
                 "script-src": ["'self'"],
-                "stye-src": null,
+                "style-src": "'self'",
                 "img-src": ["'self'", "tile.openstreetmap.org", "data:"]
             }
         }
