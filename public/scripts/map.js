@@ -1,7 +1,9 @@
+
+//create map
 const map = L.map('map').setView([36.81254084216825, -119.74615523707597], 17);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
-    minZoom: 15,
+    minZoom: 14,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
@@ -15,8 +17,8 @@ const campusBoundary = L.polygon([
 
 //add bounds to the map
 const mapBoundary = L.latLngBounds(
-    L.latLng(36.833229236, -119.764303005),
-    L.latLng(36.798524092, -119.726196132)
+    L.latLng(36.834229236, -119.763303005),
+    L.latLng(36.799524092, -119.727196132)
 );
 map.setMaxBounds(mapBoundary);
 
