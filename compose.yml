@@ -1,0 +1,54 @@
+version: '3'
+services:
+  map_www:
+    image: access-map-www
+    build: 
+      context: ./image-map-www
+      network: host
+    pull_policy: never
+    ports:
+      - 3300:3300
+    environment:
+      NODE_ENV: production
+      MYSQL_USER: access_www
+      MYSQL_PASSWD: AlbasTrollopesledge
+      MYSQL_HOSTNAME: map_mysql
+      MYSQL_PORT: 3306
+      LISTEN_PORT: 3300
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 60s
+
+  map_mysql:
+    image: mysql:8.0.36
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_USER: access_www
+      MYSQL_PASSWORD: AlbasTrollopesledge
+      MYSQL_ROOT_PASSWORD: subpoenaingdesecratedStephen
+      MYSQL_DATABASE: accessibility
+    volumes:
+      - mysql_storage:/var/lib/mysql
+
+  map_backup:
+    image: databack/mysql-backup
+    environment:
+      DB_DUMP_FREQ: 2880
+      DB_DUMP_TARGET: smb://192.168.1.158/mysql
+      SMB_USER: access-map
+      SMB_PASS: hakegorillasoldierDante
+      
+      DB_SERVER: map_mysql
+      DB_NAMES: accessibility
+      DB_USER: access_www
+      DB_PASS: AlbasTrollopesledge
+
+
+
+volumes:
+  mysql_storage:
+    
