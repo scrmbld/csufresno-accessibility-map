@@ -36,6 +36,10 @@ const Issue = sequelize.define("Issue", {
     textbody: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    locname: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 },
 {
@@ -61,18 +65,23 @@ async function getAllIssues() {
 //takes a post request and writes an issue to the database
 async function writeIssueDB(req) {
 
-    const result = sequelize.transaction((t) => {
-    
-        //insert into database
-        const issue = Issue.create({
-            lat: req.body.lat,
-            lng: req.body.lng,
-            textbody: striptags(req.body.desc),
-        }, {transaction: t});
-    
-        return issue;
-    });
-
+    try {
+        const result = await sequelize.transaction((t) => {
+        
+            //insert into database
+            const issue = Issue.create({
+                lat: req.body.lat,
+                lng: req.body.lng,
+                textbody: striptags(req.body.desc),
+                locname: striptags(req.body.loc)
+            }, {transaction: t});
+        
+            return issue;
+        });
+    } catch (error) {
+        // let the caller decide how to tell the client
+        throw error;
+    }
 }
 
 module.exports = {getAllIssues, writeIssueDB, checkTables};

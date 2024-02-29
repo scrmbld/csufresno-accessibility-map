@@ -38,9 +38,11 @@ reqIssues();
 function onMapClick(e) {
     //the form that appears within the popup
     let entryContent = 
-    `<form action="./submit" method="POST">
-        <label for="desc">Report an accessibility issue:</label><br>
-        <input type="text" name="desc" id="issue-desc" autocomplete="off" maxlength="255" required><br>
+    `<form action="./submit" method="POST" class="popup-form">
+        <label for="loc-description">Describe the location:</label><br>
+        <textarea name="loc" id="loc-desc" maxlength="255" cols="30" rows="1" wrap="soft" required></textarea><br>
+        <label for="desc">Describe the issue:</label><br>
+        <textarea name="desc" id="desc" maxlength="255" cols="30" rows="5" wrap="soft" required></textarea><br>
         <!-- also send the location of the report -->
         <input type="hidden" name="lat" id="issue-lat" value=${e.latlng.lat}>
         <input type="hidden" name="lng" id="issue-lng" value=${e.latlng.lng}>

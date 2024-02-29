@@ -15,7 +15,7 @@ router.use('/submit', limiter)
 
 //accept form submission for a new issue report
 router.post('/submit', async (req, res) => {
-    
+    console.log(req.body.desc);
     //do SQL stuff
     const timeOfReq = new Date(Date.now());
     console.log(Date.now(), ': new report received from', req.ip);
@@ -32,7 +32,6 @@ router.post('/submit', async (req, res) => {
     //redirect user on success
     res.redirect('index.html');
 
-    //await issuedb.writeIssueJSON();
 });
 
 //send all issues in database to client in JSON form
