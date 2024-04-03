@@ -37,7 +37,7 @@ services:
   map_backup:
     image: databack/mysql-backup
     environment:
-      DB_DUMP_FREQ: 1
+      DB_DUMP_FREQ: 2880
       DB_DUMP_TARGET: /db
       
       DB_SERVER: map_mysql
