@@ -1,0 +1,63 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+html, body, #map {
+    height: 100%;
+    width: 100%;
+}
+
+@media (min-width: 1200px) {
+    .about span {
+        font-size: 28px;
+    }
+}
+
+/* the text box on the top right of the map */
+.about {
+    padding: 10px 8px;
+    font: 16px/18px Arial, Helvetica, sans-serif;
+    background: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+
+.popup-form {
+    font-size: 16px;
+}
+
+/* text input */
+.popup-form textarea {
+    outline-offset: 0px;
+    resize: none; /* why is this enabled by default */
+
+    border-width: 3px;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: #a2a2a2;
+    font-size: 16px;
+
+}
+.popup-form textarea:focus {
+    outline-offset: 0px;
+    border-color: #3e76e7;
+    outline: none;
+
+}
+
+/* submit button */
+.popup-form input[type="submit"] {
+    width: 40%;
+    padding: 2% 0%;
+    margin-top: 4%;
+    
+    background-color: #5a89e7;
+    font-size: 18px;
+    border-width: 0px;
+}
+
+.popup-form input[type="submit"]:hover {
+    background-color: #3e76e7;
+    cursor: pointer;
+}
+

@@ -5,12 +5,10 @@ const striptags = require("striptags");
 const dev_db_name = 'cynthia';
 const dev_db_passwd = 'word';
 
-var authenticated = false;
-
 //start sequelize
 const sequelize = new Sequelize('accessibility', process.env.MYSQL_USER || dev_db_name, process.env.MYSQL_PASSWD || dev_db_passwd, {
     host: process.env.MYSQL_HOSTNAME || 'localhost',
-    port: process.env.MYSQL_PORT || '3306',
+    port: process.env.MYSQL_PORT || '33060',
     dialect: 'mysql'
 });
 
@@ -34,6 +32,10 @@ const Issue = sequelize.define("Issue", {
         allowNull: false
     },
     textbody: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    locname: {
         type: DataTypes.STRING,
         allowNull: false
     }
@@ -61,18 +63,23 @@ async function getAllIssues() {
 //takes a post request and writes an issue to the database
 async function writeIssueDB(req) {
 
-    const result = sequelize.transaction((t) => {
-    
-        //insert into database
-        const issue = Issue.create({
-            lat: req.body.lat,
-            lng: req.body.lng,
-            textbody: striptags(req.body.desc),
-        }, {transaction: t});
-    
-        return issue;
-    });
-
+    try {
+        const result = await sequelize.transaction((t) => {
+        
+            //insert into database
+            const issue = Issue.create({
+                lat: req.body.lat,
+                lng: req.body.lng,
+                textbody: striptags(req.body.desc),
+                locname: striptags(req.body.loc)
+            }, {transaction: t});
+        
+            return issue;
+        });
+    } catch (error) {
+        // let the caller decide how to tell the client
+        throw error;
+    }
 }
 
 module.exports = {getAllIssues, writeIssueDB, checkTables};

@@ -1,5 +1,5 @@
 .vscode
-node_modules
-public/leaflet
-public/purify
+image-map-www/node_modules
+image-map-www/public/leaflet/*
+image-map-www/public/purify/*
 test.session.sql
