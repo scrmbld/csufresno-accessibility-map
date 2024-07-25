@@ -8,7 +8,7 @@ const dev_db_passwd = 'word';
 //start sequelize
 const sequelize = new Sequelize('accessibility', process.env.MYSQL_USER || dev_db_name, process.env.MYSQL_PASSWD || dev_db_passwd, {
     host: process.env.MYSQL_HOSTNAME || 'localhost',
-    port: process.env.MYSQL_PORT || '3306',
+    port: process.env.MYSQL_PORT || '33060',
     dialect: 'mysql'
 });
 

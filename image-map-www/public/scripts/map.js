@@ -1,26 +1,21 @@
 
 //create map
-const map = L.map('map').setView([36.81254084216825, -119.74615523707597], 17);
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+let osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     minZoom: 14,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+});
 
-//create a box that encloses the campus
-const campusBoundary = L.polygon([
-    [36.82322923623916, -119.75430300511287],
-    [36.808524092365715, -119.75430300511287],
-    [36.808524092365715, -119.73619613195113],
-    [36.82322923623916, -119.73619613195113]
-]).addTo(map);
+//load data & create map markers for stored issues
+let markers = L.layerGroup();
+reqIssues(markers);
 
-//add bounds to the map
-const mapBoundary = L.latLngBounds(
-    L.latLng(36.834229236, -119.763303005),
-    L.latLng(36.799524092, -119.727196132)
-);
-map.setMaxBounds(mapBoundary);
+const map = L.map('map', {
+    center: [36.81254084216825, -119.74615523707597],
+    zoom: 17,
+    layers: [osm]
+});
 
 //create explanation overlay -- tells the user how to use the site
 const about = L.control({position: "topright"});
@@ -31,8 +26,34 @@ about.onAdd = (map) => {
 };
 about.addTo(map);
 
-//load data & create map markers for stored issues
-reqIssues();
+//create a box that encloses the campus
+let campusBoundary = L.polygon([
+    [36.82322923623916, -119.75430300511287],
+    [36.808524092365715, -119.75430300511287],
+    [36.808524092365715, -119.73619613195113],
+    [36.82322923623916, -119.73619613195113]
+])
+campusBoundary.addTo(map);
+
+let baseMaps = {
+    "OpenStreetMap": osm
+};
+
+let overlayMaps = {
+    'Markers': markers
+}
+
+//add bounds to the map
+const mapBoundary = L.latLngBounds(
+    L.latLng(36.884229236, -119.823303005),
+    L.latLng(36.729524092, -119.667196132)
+);
+map.setMaxBounds(mapBoundary);
+
+var layerControl = L.control.layers(baseMaps, overlayMaps, {
+    collapsed: false,
+    hideSingleBase: true
+}).addTo(map);
 
 //at some point we will use this to allow users to report things
 function onMapClick(e) {

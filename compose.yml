@@ -23,13 +23,13 @@ services:
         window: 60s
 
   map_mysql:
-    image: mysql:8.0.36
+    image: mysql:latest
     ports:
       - 3306:3306
     environment:
       MYSQL_USER: access_www
       MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: accessibility
     volumes:
       - mysql_storage:/var/lib/mysql
@@ -38,8 +38,9 @@ services:
     image: databack/mysql-backup
     environment:
       DB_DUMP_FREQ: 2880
-      DB_DUMP_TARGET: /db
-      
+      DB_DUMP_TARGET: "/db"
+      SMB_USER: access_map
+      SMB_PASS: secret
       DB_SERVER: map_mysql
       DB_NAMES: accessibility
       DB_USER: access_www
