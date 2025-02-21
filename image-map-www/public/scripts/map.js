@@ -7,15 +7,16 @@ let osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
 
-//load data & create map markers for stored issues
-let markers = L.layerGroup();
-reqIssues(markers);
-
 const map = L.map('map', {
     center: [36.81254084216825, -119.74615523707597],
     zoom: 17,
     layers: [osm]
 });
+
+//load data & create map markers for stored issues
+let markers = L.layerGroup();
+reqIssues(markers);
+markers.addTo(map) // this enables these in the layer control by default
 
 //create explanation overlay -- tells the user how to use the site
 const about = L.control({position: "topright"});
@@ -55,7 +56,7 @@ var layerControl = L.control.layers(baseMaps, overlayMaps, {
     hideSingleBase: true
 }).addTo(map);
 
-//at some point we will use this to allow users to report things
+
 function onMapClick(e) {
     //the form that appears within the popup
     let entryContent = 

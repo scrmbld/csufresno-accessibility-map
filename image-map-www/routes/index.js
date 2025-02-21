@@ -18,7 +18,8 @@ router.post('/submit', async (req, res) => {
     console.log(req.body.desc);
     //do SQL stuff
     const timeOfReq = new Date(Date.now());
-    console.log(Date.now(), ': new report received from', req.ip);
+    console.log(Date.now(), ': new report received');
+    console.log(req)
     
     try {
         await issuedb.writeIssueDB(req);
