@@ -11,7 +11,7 @@ services:
     environment:
       NODE_ENV: production
       MYSQL_USER: access_www
-      MYSQL_PASSWD: secret
+      MYSQL_PASSWD: secret # IMPORTANT: this shuld be changed in production
       MYSQL_HOSTNAME: map_mysql
       MYSQL_PORT: 3306
       LISTEN_PORT: 3300
