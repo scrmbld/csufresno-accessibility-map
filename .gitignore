@@ -1,4 +1,5 @@
 .vscode
+images-map-www/package-lock.json
 image-map-www/node_modules
 image-map-www/public/leaflet/*
 image-map-www/public/purify/*

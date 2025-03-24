@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const compression = require('compression');
-const helmet = require("helmet");
+const helmet = require('helmet');
 
 const app = express();
 //port used by express
@@ -25,14 +25,14 @@ app.use(
     })
 );
 
-const mapRouter = require("./routes/index");
+const mapRouter = require('./routes/index');
 
-app.use(express.static("public"));
+app.use(express.static('public'));
 
-app.use('/', mapRouter);
+app.use('', mapRouter);
 
 //syncronise issue table
-const issuedb = require("./data");
+const issuedb = require('./data');
 issuedb.checkTables();
 
 //start listening on the specified port
