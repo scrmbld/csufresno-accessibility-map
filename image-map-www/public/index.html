@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>map</title>
-        <meta name="description" content="interactive map">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <!-- Leaflet CSS-->
-        <link rel="stylesheet" href="leaflet/leaflet.css"/>
-        <!-- Our CSS -->
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <!-- Leaflet JS -->
-        <script src="leaflet/leaflet.js"></script>
-        <!-- Purify -->
-        <script src="purify/purify.js"></script>
 
-        <div id="map"></div>
+<head>
+    <meta charset="utf-8">
+    <title>Interactive Accessibility Map</title>
+    <meta name="description"
+        content="An interactive map for reporting and viewing accessibility issues on the Fresno State campus.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="icon" href="images/fabulously_disabled_icon.png" type="image/x-icon">
+    <!-- Leaflet CSS-->
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
 
-        <script src="scripts/issueMarkers.js"></script>
-        <script src="scripts/map.js"></script>
-        
-    </body>
+<body>
+    <!-- Leaflet JS -->
+    <script src="leaflet/leaflet.js"></script>
+    <!-- Purify -->
+    <script src="purify/purify.js"></script>
+
+    <div id="map"></div>
+
+    <script src="scripts/issueMarkers.js"></script>
+    <script src="scripts/map.js"></script>
+
+</body>
+
 </html>
