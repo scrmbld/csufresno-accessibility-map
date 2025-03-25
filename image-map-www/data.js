@@ -12,7 +12,7 @@ const sequelize = new Sequelize('accessibility', process.env.MYSQL_USER || dev_d
     dialect: 'mysql'
 });
 
-sequelize.authenticate().then(() => {console.log('MySQL Conenction has been established successfully');});
+sequelize.authenticate().then(() => { console.log('MySQL Conenction has been established successfully'); });
 
 //the model for issues -- identifier, coordinates, user entered text, and creation date
 const Issue = sequelize.define("Issue", {
@@ -25,11 +25,11 @@ const Issue = sequelize.define("Issue", {
     },
     lat: {
         type: DataTypes.DOUBLE,
-        allowNull: false
+        allowNull: true
     },
     lng: {
         type: DataTypes.DOUBLE,
-        allowNull: false
+        allowNull: true
     },
     textbody: {
         type: DataTypes.STRING,
@@ -40,14 +40,14 @@ const Issue = sequelize.define("Issue", {
         allowNull: false
     }
 },
-{
-    sequelize,
-    timestamps: true,
-    createdAt: "created",
-    updatedAt: false
-});
+    {
+        sequelize,
+        timestamps: true,
+        createdAt: "created",
+        updatedAt: false
+    });
 
-function checkTables() { 
+function checkTables() {
     sequelize.sync();
 }
 
@@ -56,7 +56,7 @@ async function getAllIssues() {
 
     //request the database
     const issues = await Issue.findAll();
-    
+
     return issues;
 }
 
@@ -65,15 +65,15 @@ async function writeIssueDB(req) {
 
     try {
         const result = await sequelize.transaction((t) => {
-        
+
             //insert into database
             const issue = Issue.create({
                 lat: req.body.lat,
                 lng: req.body.lng,
                 textbody: striptags(req.body.desc),
                 locname: striptags(req.body.loc)
-            }, {transaction: t});
-        
+            }, { transaction: t });
+
             return issue;
         });
     } catch (error) {
@@ -82,4 +82,4 @@ async function writeIssueDB(req) {
     }
 }
 
-module.exports = {getAllIssues, writeIssueDB, checkTables};
+module.exports = { getAllIssues, writeIssueDB, checkTables };

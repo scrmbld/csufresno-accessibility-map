@@ -11,19 +11,20 @@ const limiter = rateLimit({
 
 const router = express.Router();
 
-router.get('/', async (_, res) => {
-    console.log('request received')
+router.get('/', async (req, res) => {
     res.render('index')
+})
+
+router.get('/report', async (req, res) => {
+    res.render('report')
 })
 
 router.use('/submit', limiter)
 
 //accept form submission for a new issue report
 router.post('/submit', async (req, res) => {
-    console.log(req.body.desc);
     //do SQL stuff
     console.log(Date.now(), ': new report received');
-    console.log(req)
 
     try {
         await issuedb.writeIssueDB(req);

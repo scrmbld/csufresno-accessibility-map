@@ -22,6 +22,9 @@ function makeMarkerContent(locText, outText, createdText) {
 //take a list of issues and make markers for each one
 async function createMarkers(issues, group) {
     for (issue of issues) {
+        if (issue.lat == null || issue.lng == null) {
+            continue;
+        }
         //protect ourselves from XSS in the issue descriptions
         let outText = DOMPurify.sanitize(issue.textbody);
         if (!outText) continue;
@@ -37,13 +40,13 @@ async function createMarkers(issues, group) {
         let new_marker = L.marker([issue.lat, issue.lng]);
         new_marker.bindPopup(makeMarkerContent(locText, outText, createdText));
 
-        group.addLayer(new_marker)
+        group.addLayer(new_marker);
     }
 }
 
 //get the JSON of all the issues
 async function reqIssues(group) {
-    
+
     const response = await fetch("issues");
     const issues = await response.json();
 
