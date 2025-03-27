@@ -32,11 +32,11 @@ const Issue = sequelize.define("Issue", {
         allowNull: true
     },
     textbody: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(2048),
         allowNull: false
     },
     locname: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(2048),
         allowNull: false
     }
 },

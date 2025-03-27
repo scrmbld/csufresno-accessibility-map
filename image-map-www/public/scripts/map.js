@@ -19,7 +19,7 @@ reqIssues(markers);
 markers.addTo(map) // this enables these in the layer control by default
 
 //create explanation overlay -- tells the user how to use the site
-const about = L.control({position: "topright"});
+const about = L.control({ position: "topright" });
 about.onAdd = (map) => {
     this._div = L.DomUtil.create('div', 'about');
     this._div.innerHTML = `<span>Click on the map to report an accessibility issue</span>`
@@ -59,18 +59,18 @@ var layerControl = L.control.layers(baseMaps, overlayMaps, {
 
 function onMapClick(e) {
     //the form that appears within the popup
-    let entryContent = 
-    `<form action="./submit" method="POST" class="popup-form">
+    let entryContent =
+        `<form action="./submit" method="POST" class="popup-form">
         <label for="loc-description">Describe the location:</label><br>
-        <textarea name="loc" id="loc-desc" maxlength="255" cols="30" rows="1" wrap="soft" required></textarea><br>
+        <textarea name="loc" id="loc-desc" maxlength="2048" cols="30" rows="1" wrap="soft" required></textarea><br>
         <label for="desc">Describe the issue:</label><br>
-        <textarea name="desc" id="desc" maxlength="255" cols="30" rows="5" wrap="soft" required></textarea><br>
+        <textarea name="desc" id="desc" maxlength="2048" cols="30" rows="5" wrap="soft" required></textarea><br>
         <!-- also send the location of the report -->
         <input type="hidden" name="lat" id="issue-lat" value=${e.latlng.lat}>
         <input type="hidden" name="lng" id="issue-lng" value=${e.latlng.lng}>
         <input type="submit" value="Submit">
     </form>`;
-    L.popup([0,0], {
+    L.popup([0, 0], {
         content: entryContent,
         autoPan: false
     }).setLatLng(e.latlng).openOn(map);

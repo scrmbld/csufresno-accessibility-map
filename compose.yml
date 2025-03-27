@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   map_www:
     image: access-map-www
