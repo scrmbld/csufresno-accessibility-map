@@ -12,7 +12,7 @@ const limiter = rateLimit({
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    res.render('index')
+    res.render('map')
 })
 
 router.get('/report', async (req, res) => {
